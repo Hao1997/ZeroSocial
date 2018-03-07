@@ -1,6 +1,7 @@
 import psycopg2 as pgadmin
 import uuid
 from datetime import datetime
+from General import time_utility as time
 
 class Database:
     cursor = None
@@ -37,6 +38,7 @@ class Database:
             print(e)
 
         print("Added " + username + " to database");
+        time.small_timeout()
 
     def find_instagram_user_by_name(self, username):
         try:
@@ -46,8 +48,10 @@ class Database:
                 WHERE username = '{username}'
 
             """.format(username=username))
+            time.small_timeout()
             return len(self.cursor.fetchall()) != 0
         except Exception as e:
             print(e)
+
     def commit(self):
         self.connection.commit()
